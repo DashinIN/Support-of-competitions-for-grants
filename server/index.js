@@ -1,8 +1,13 @@
 const express = require('express');
 const Sequelize = require('sequelize');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+
+const port = 5000;
 
 const app = express();
-const port = 5000;
+app.use(bodyParser.json());
+app.use(cors());
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -87,7 +92,7 @@ sequelize.sync()
     console.error('Ошибка синхронизации базы данных:', err);
   });
 
-app.get('/vuz', async (req, res) => {
+app.get('/api/vuz', async (req, res) => {
   try {
     const data = await Vuz.findAll();
     res.json(data);
